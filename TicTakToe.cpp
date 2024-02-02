@@ -3,7 +3,7 @@
 using namespace std;
 
     int row, column;
-    int n1, n2;
+    string n1, n2;
     char token = 'x';
     bool tie = false;
     char space[3][3] = {
@@ -96,15 +96,23 @@ void FuncTwo() {
     FuncOne();
 }
 
-bool FuncThree() {
+bool FuncThree() 
+{
     for (int i = 0; i < 3; i++)
     {
-
-    }
+        if (space[i][1] == space[i][0] && space[i][0] == space[i][2] || space[0][i] == space[1][i] && space[0][i] == space[2][i])
+        {
+            return true;
+        }
+    }return false;
 }
 
 int main() {
-    FuncOne();
-    FuncTwo();
+	while (!FuncThree())
+	{
+		FuncOne();
+		FuncTwo();
+        FuncThree();
+	}
 }
 
