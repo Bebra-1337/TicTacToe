@@ -26,11 +26,11 @@ using namespace std;
 void FuncTwo() {
     int digit;
     if (token == 'x') {
-        cout << n1 << "please enter";
+        cout << n1 << " please enter: ";
         cin >> digit;
     }
     if (token == '0') {
-        cout << n2 << "please enter";
+        cout << n2 << " please enter: ";
         cin >> digit;
     }
     switch (digit)
@@ -71,9 +71,6 @@ void FuncTwo() {
         row = 2;
         column = 2;
         break;
-
-    default:
-        break;
     }
     if (digit<1 || digit>9)
     {
@@ -93,10 +90,10 @@ void FuncTwo() {
         cout << "Pososi!!!";
         FuncTwo();
     }
-    FuncOne();
+    
 }
 
-bool FuncThree() 
+static bool FuncThree()
 {
     for (int i = 0; i < 3; i++)
     {
@@ -104,15 +101,48 @@ bool FuncThree()
         {
             return true;
         }
-    }return false;
+    }
+        if (space[0][0]==space[1][1]&& space[1][1]==space[2][2]||space[0][2]==space[1][1]&&space[1][1]==space[2][0])
+        {
+            return true;
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (space[i][j] !='x' && space[i][j] !='0')
+                {
+                    return false;
+                }
+            }
+        }
+        tie = true;
+        return false;
 }
 
 int main() {
+    cout << "Enter the first palyer name: \n";
+    cin >> n1;
+    cout << "Enter the second palyer name: \n";
+    cin >> n2;
 	while (!FuncThree())
 	{
-		FuncOne();
+        FuncOne();
 		FuncTwo();
         FuncThree();
 	}
+    if (token == 'x' && tie == false)
+    {
+        cout << n2 << " Wins!!!";
+    }
+    else if (token=='0' && tie==false)
+    {
+        cout << n1 << " Wins!!!";
+
+    }
+    else
+    {
+        cout << "It's Draw";
+    }
 }
 
