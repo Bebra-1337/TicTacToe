@@ -1,149 +1,94 @@
 ﻿#include <iostream>
-
 using namespace std;
 
-int row, column;
-string n1, n2;
-char token = 'x';
-bool tie = false;
-char space[3][3] = {
-{'1','2','3'},
-{'4','5','6'},
-{'7','8','9'} };
-void FuncOne() {
-	cout << "    |     |    \n";
-	cout << "  " << space[0][0] << " |  " << space[0][1] << "  |  " << space[0][2] << "\n";
-	cout << "____|_____|____\n";
-	cout << "    |     |    \n";
-	cout << "  " << space[1][0] << " |  " << space[1][1] << "  |  " << space[1][2] << "\n";
-	cout << "____|_____|____\n";
-	cout << "    |     |    \n";
-	cout << "  " << space[2][0] << " |  " << space[2][1] << "  |  " << space[2][2] << "\n";
-	cout << "    |     |    \n";
+char board[3][3] = { {'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
+int player = 1;
+int choice;
+char mark;
 
-
-}
-void FuncTwo() {
-	int digit;
-	if (token == 'x') {
-		cout << n1 << " please enter: ";
-		cin >> digit;
-	}
-	if (token == '0') {
-		cout << n2 << " please enter: ";
-		cin >> digit;
-	}
-	switch (digit)
-	{
-	case 1:
-		row = 0;
-		column = 0;
-		break;
-	case 2:
-		row = 0;
-		column = 1;
-		break;
-	case 3:
-		row = 0;
-		column = 2;
-		break;
-	case 4:
-		row = 1;
-		column = 0;
-		break;
-	case 5:
-		row = 1;
-		column = 1;
-		break;
-	case 6:
-		row = 1;
-		column = 2;
-		break;
-	case 7:
-		row = 2;
-		column = 0;
-		break;
-	case 8:
-		row = 2;
-		column = 1;
-		break;
-	case 9:
-		row = 2;
-		column = 2;
-		break;
-	}
-	if (digit < 1 || digit>9)
-	{
-		cout << "Invali ebaniy\n";
-	}
-	if (token == 'x' && space[row][column] != 'x' && space[row][column] != '0')
-	{
-		space[row][column] = 'x';
-		token = '0';
-	}
-	else if (token == '0' && space[row][column] != 'x' && space[row][column] != '0') {
-		space[row][column] = '0';
-		token = 'x';
-	}
-	else
-	{
-		cout << "Pososi!!!";
-		FuncTwo();
-	}
-
+void drawBoard() {
+    cout << "  Крестики-нолики" << endl;
+    cout << "-------------------" << endl;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << board[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << "-------------------" << endl;
 }
 
-static bool FuncThree()
-{
-	for (int i = 0; i < 3; i++)
-	{
-		if (space[i][1] == space[i][0] && space[i][0] == space[i][2] || space[0][i] == space[1][i] && space[0][i] == space[2][i])
-		{
-			return true;
-		}
-	}
-	if (space[0][0] == space[1][1] && space[1][1] == space[2][2] || space[0][2] == space[1][1] && space[1][1] == space[2][0])
-	{
-		return true;
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (space[i][j] != 'x' && space[i][j] != '0')
-			{
-				return false;
-			}
-		}
-	}
-	tie = true;
-	return false;
+void getPlayerChoice() {
+    if (player == 1) {
+        cout << "Ходит игрок 1 (X). Выберите номер клетки: ";
+    }
+    else {
+        cout << "Ходит игрок 2 (O). Выберите номер клетки: ";
+    }
+    cin >> choice;
+
+    mark = (player == 1) ? 'X' : 'O';
+
+    if (choice == 1 && board[0][0] == '1')
+        board[0][0] = mark;
+    else if (choice == 2 && board[0][1] == '2')
+        board[0][1] = mark;
+    else if (choice == 3 && board[0][2] == '3')
+        board[0][2] = mark;
+    else if (choice == 4 && board[1][0] == '4')
+        board[1][0] = mark;
+    else if (choice == 5 && board[1][1] == '5')
+        board[1][1] = mark;
+    else if (choice == 6 && board[1][2] == '6')
+        board[1][2] = mark;
+    else if (choice == 7 && board[2][0] == '7')
+        board[2][0] = mark;
+    else if (choice == 8 && board[2][1] == '8')
+        board[2][1] = mark;
+    else if (choice == 9 && board[2][2] == '9')
+        board[2][2] = mark;
+    else {
+        cout << "Недопустимый ход. Попробуйте снова." << endl;
+        getPlayerChoice();
+    }
+}
+
+int checkForWin() {
+    for (int i = 0; i < 3; i++) {
+        if (board[i][0] == board[i][1] && board[i][1] == board[i][2])
+            return 1;
+        if (board[0][i] == board[1][i] && board[1][i] == board[2][i])
+            return 1;
+    }
+    if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
+        return 1;
+    if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
+        return 1;
+    if (board[0][0] != '1' && board[0][1] != '2' && board[0][2] != '3' &&
+        board[1][0] != '4' && board[1][1] != '5' && board[1][2] != '6' &&
+        board[2][0] != '7' && board[2][1] != '8' && board[2][2] != '9')
+        return 0;
+    return -1;
 }
 
 int main() {
-	cout << "Enter the first palyer name: \n";
-	cin >> n1;
-	cout << "Enter the second palyer name: \n";
-	cin >> n2;
-	while (!FuncThree())
-	{
-		FuncOne();
-		FuncTwo();
-		FuncThree();
-	}
-	if (token == 'x' && tie == false)
-	{
-		cout << n2 << " Wins!!!" << endl;
-	}
-	else if (token == '0' && tie == false)
-	{
-		cout << n1 << " Wins!!!" << endl;
+    setlocale(LC_ALL, "ru");
+    int gameStatus;
+    do {
+        drawBoard();
+        getPlayerChoice();
+        gameStatus = checkForWin();
+        player = (player == 1) ? 2 : 1;
+    } while (gameStatus == -1);
 
-	}
-	else
-	{
-		cout << "It's Draw" << endl;
-	}
-	system("pause");
+    drawBoard();
+
+    if (gameStatus == 1) {
+        cout << "**Игрок " << ((player == 1) ? 2 : 1) << " победил!**" << endl;
+    }
+    else {
+        cout << "**Ничья!**" << endl;
+    }
+
+    return 0;
 }
-
