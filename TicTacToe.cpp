@@ -29,27 +29,47 @@ void getPlayerChoice() {
 
     mark = (player == 1) ? 'X' : 'O';
 
-    if (choice == 1 && board[0][0] == '1')
-        board[0][0] = mark;
-    else if (choice == 2 && board[0][1] == '2')
-        board[0][1] = mark;
-    else if (choice == 3 && board[0][2] == '3')
-        board[0][2] = mark;
-    else if (choice == 4 && board[1][0] == '4')
-        board[1][0] = mark;
-    else if (choice == 5 && board[1][1] == '5')
-        board[1][1] = mark;
-    else if (choice == 6 && board[1][2] == '6')
-        board[1][2] = mark;
-    else if (choice == 7 && board[2][0] == '7')
-        board[2][0] = mark;
-    else if (choice == 8 && board[2][1] == '8')
-        board[2][1] = mark;
-    else if (choice == 9 && board[2][2] == '9')
-        board[2][2] = mark;
-    else {
+    switch (choice) {
+    case 1:
+        if (board[0][0] == '1')
+            board[0][0] = mark;
+        break;
+    case 2:
+        if (board[0][1] == '2')
+            board[0][1] = mark;
+        break;
+    case 3:
+        if (board[0][2] == '3')
+            board[0][2] = mark;
+        break;
+    case 4:
+        if (board[1][0] == '4')
+            board[1][0] = mark;
+        break;
+    case 5:
+        if (board[1][1] == '5')
+            board[1][1] = mark;
+        break;
+    case 6:
+        if (board[1][2] == '6')
+            board[1][2] = mark;
+        break;
+    case 7:
+        if (board[2][0] == '7')
+            board[2][0] = mark;
+        break;
+    case 8:
+        if (board[2][1] == '8')
+            board[2][1] = mark;
+        break;
+    case 9:
+        if (board[2][2] == '9')
+            board[2][2] = mark;
+        break;
+    default:
         cout << "Недопустимый ход. Попробуйте снова." << endl;
         getPlayerChoice();
+        break;
     }
 }
 
